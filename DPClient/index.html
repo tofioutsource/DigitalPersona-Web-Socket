@@ -1,0 +1,77 @@
+<html lang="en"> 
+    <head> 
+        <meta charset="utf-8"> 
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+        <title>digital Persona</title> 		
+    <link href="css/grid.css" rel="stylesheet" /> 
+    <link href="css/styles.css" rel="stylesheet" /> 
+    <script src="js/modernizr-custom-2.0.min.js"></script>
+    </head> 
+
+    <body> 
+      <div class="container_12"> 
+        <header class="grid_12"> 
+          <h1>digital Persona - Websocket interface</h1> 
+          <h2>Status: <span id="status" class="offline">Offline</span> <button id="disconnect">Disconnect</button></h2>
+        </header> 
+      </div> 
+
+      <div class="clear"></div> 
+
+      <div class="container_12"> 
+        <section class="grid_12"> 
+          <form id="connectToServer" method="get" action="sockets.html">
+            <fieldset title="Connect to Server"> 
+            <legend>Connect to Server</legend> 
+            Server: <input id="server" value="localhost" /> : <input id="port" value="9002" />
+            <button id="connect" type="submit">Connect</button>
+            </fieldset>
+          </form>
+
+          <br /> 
+
+          <form id="registerName" method="get" action="sockets.html" style="display: none;"> 
+            <fieldset title="Register Username"> 
+            <legend>Register Username</legend> 
+            <input id="name" />
+            <button id="register" type="submit">Register</button> 
+            </fieldset>	
+          </form> 
+
+          <form id="tapUser" method="get" action="sockets.html" style="display: none;"> 
+            <fieldset title="Register Username"> 
+            <legend>Waiting for Finger</legend> 
+            <input id="name" />
+            <button id="register" type="submit">Tap Finger</button> 
+            </fieldset>	
+          </form> 
+
+          <!-- <form id="sendMessage" method="get" action="sockets.html" style="display: none;"> 
+            <fieldset title="Chat"> 
+            <legend>Chat</legend> 
+            <input id="message" type="text" />
+            <button id="send" type="submit">Send</button> 
+            </fieldset>	
+          </form>  -->
+        </section>
+
+        <div class="clear"></div>
+
+        <section id="chat" class="grid_12">
+          
+          <pre id="results"></pre> 
+          </section>
+        </div> 
+
+        <div class="clear"></div> 
+ 
+        <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.7.1.min.js"></script> 
+        <script src="js/json2.js"></script> 
+
+        
+        <script src="js/alchemy-client.js"></script> 
+
+        <!-- this is the demo code -->
+        <script src="js/startup.js"></script> 
+      </body> 
+    </html> 

@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{B4F633FC-2A14-4A4C-96D5-AAC4F83111DD}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>DPReceiver</RootNamespace>
     <AssemblyName>DPReceiver</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -52,7 +52,13 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Alchemy, Version=2.2.0.238, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Alchemy.2.2.1\lib\net40\Alchemy.dll</HintPath>
+    </Reference>
     <Reference Include="DPFPCtlXTypeLibNET">
       <HintPath>..\..\LIB - SDK Digital Persona\Bin\DPFPCtlXTypeLibNET.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -79,25 +85,23 @@
     <Reference Include="DPFPVerNET">
       <HintPath>..\..\LIB - SDK Digital Persona\Bin\DPFPVerNET.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Owin, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.4.2.2\lib\net45\Microsoft.Owin.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Owin.Hosting, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Hosting.4.2.2\lib\net45\Microsoft.Owin.Hosting.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.5.2.0\lib\net46\NLog.dll</HintPath>
-    </Reference>
-    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
-      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Management" />
-    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -106,17 +110,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FingerInstaller.cs">
-      <SubType>Component</SubType>
+    <Compile Include="AppProcessor.cs" />
+    <Compile Include="FingerCapture.cs" />
+    <Compile Include="FingerCaptureForm.cs">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FingerInstaller.Designer.cs">
-      <DependentUpon>FingerInstaller.cs</DependentUpon>
+    <Compile Include="FingerCaptureForm.Designer.cs">
+      <DependentUpon>FingerCaptureForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="FingerProcessor.cs">
-      <SubType>Component</SubType>
+    <Compile Include="FingerCapturehandler.cs" />
+    <Compile Include="IFinger.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FingerProcessor.Designer.cs">
-      <DependentUpon>FingerProcessor.cs</DependentUpon>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -127,6 +135,32 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dphftrex.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="dpHMatch.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LIBS\DPFPCtlXTypeLibNET.dll" />
+    <None Include="LIBS\DPFPCtlXWrapperNET.dll" />
+    <None Include="LIBS\DPFPDevNET.dll" />
+    <None Include="LIBS\DPFPEngNET.dll" />
+    <None Include="LIBS\DPFPGuiNET.dll" />
+    <None Include="LIBS\DPFPShrNET.dll" />
+    <None Include="LIBS\DPFPShrXTypeLibNET.dll" />
+    <None Include="LIBS\DPFPVerNET.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FingerCaptureForm.resx">
+      <DependentUpon>FingerCaptureForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
