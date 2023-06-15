@@ -112,13 +112,9 @@
   <ItemGroup>
     <Compile Include="AppProcessor.cs" />
     <Compile Include="FingerCapture.cs" />
-    <Compile Include="FingerCaptureForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FingerCaptureForm.Designer.cs">
-      <DependentUpon>FingerCaptureForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="FingerCapturehandler.cs" />
+    <Compile Include="FingerEnroll.cs" />
+    <Compile Include="FingerEnrollHandler.cs" />
     <Compile Include="IFinger.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -155,9 +151,6 @@
     <None Include="LIBS\DPFPVerNET.dll" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FingerCaptureForm.resx">
-      <DependentUpon>FingerCaptureForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
