@@ -3,15 +3,8 @@ using Alchemy.Classes;
 using Newtonsoft.Json;
 using NLog;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Configuration;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DPReceiver
@@ -45,6 +38,7 @@ namespace DPReceiver
             };
 
             Server.Start();
+            this.label1.Text = $"ws://localhost:{port}";
         }
 
         public void OnConnect(UserContext context)
@@ -54,6 +48,12 @@ namespace DPReceiver
 
         public void OnReceive(UserContext context)
         {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new MethodInvoker(delegate { OnReceive(context); }));
+                return;
+            }
+
             Console.WriteLine("Received Data From :" + context.ClientAddress);
 
             try
@@ -64,29 +64,37 @@ namespace DPReceiver
                 dynamic obj = JsonConvert.DeserializeObject(json);
 
                 logger.Info(json);
-                switch ((int)obj.Type)
+
+                if (obj == null) return;
+                if (obj is int || obj is long) return;
+
+                switch ((CommandType)obj.Type)
                 {
-                    case (int)CommandType.TapFinger:
+                    case CommandType.TapFinger:
                         if (mForm != null)
-                        { 
+                        {
                             mForm.Dispose();
                             mForm = null;
                         }
 
-                        mForm = new FingerCapture();
+                        mForm = new FingerCapture(context);
                         mForm.Load();
                         break;
-                        //case (int)CommandType.Message:
-                        //    ChatMessage(obj.Message.Value, context);
-                        //    break;
-                        //case (int)CommandType.NameChange:
-                        //    NameChange(obj.Name.Value, context);
-                        //    break;
+                    case CommandType.Register:
+                        if (mForm != null)
+                        {
+                            mForm.Dispose();
+                            mForm = null;
+                        }
+
+                        mForm = new FingerEnroll(context);
+                        mForm.Load();
+                        break; 
                 }
             }
             catch (Exception e) // Bad JSON! For shame.
             {
-                var r = new Response { Type = ResponseType.Error, Data = new { e.Message } };
+                var r = new AppResponse { Type = ResponseType.Error, Data = new { e.Message } };
 
                 context.Send(JsonConvert.SerializeObject(r));
             }
@@ -122,31 +130,10 @@ namespace DPReceiver
             //BroadcastNameList();
         }
 
-        public enum ResponseType
-        {
-            Connection = 0,
-            Disconnect = 1,
-            Message = 2,
-            NameChange = 3,
-            UserCount = 4,
-            Error = 255
-        }
-
-        /// <summary>
-        /// Defines the response object to send back to the client
-        /// </summary>
-        public class Response
-        {
-            public ResponseType Type { get; set; }
-            public dynamic Data { get; set; }
-        }
-
         public enum CommandType
         {
             TapFinger = 1,
-            Register,
-            Message,
-            NameChange
+            Register
         }
     }
 }

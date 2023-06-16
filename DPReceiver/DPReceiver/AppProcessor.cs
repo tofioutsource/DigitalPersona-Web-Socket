@@ -14,6 +14,7 @@ using System.Windows.Forms;
 
 namespace DPReceiver
 {
+    [Obsolete]
     public class AppProcessor
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
@@ -67,8 +68,8 @@ namespace DPReceiver
                             mForm = null;
                         }
 
-                        mForm = new FingerCaptureForm();
-                        mForm.Show();
+                        //mForm = new FingerCapture();
+                        //mForm.Show();
                         break;
                         //case (int)CommandType.Message:
                         //    ChatMessage(obj.Message.Value, context);

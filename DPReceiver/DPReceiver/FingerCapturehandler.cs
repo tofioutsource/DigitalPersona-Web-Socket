@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alchemy.Classes;
 
 namespace DPReceiver
 {
@@ -28,13 +29,13 @@ namespace DPReceiver
             if (featureSet != null)
             {
                 DPFP.Verification.Verification.Result result = new DPFP.Verification.Verification.Result();
-                 
+
                 //List<User> ListUser = mySqlAdapter.GetAllUsers();
 
                 //ListUser.ForEach(delegate (User user) {
 
-                //    MemoryStream ms = new MemoryStream(user.Pawprint);
-                //    template.DeSerialize(ms.ToArray());
+                //using var ms = new MemoryStream(featureSet.Bytes);
+                this.handler.template.DeSerialize(featureSet.Bytes);
 
                 //    verification.Verify(featureSet, template, ref result);
                 //    if (result.Verified)
@@ -42,6 +43,8 @@ namespace DPReceiver
                 //        MessageBox.Show("Hola: " + user.Name);
                 //    }
                 //});
+                this.handler.SendMessage("Finger has been logged");
+                this.handler.SendFingerData();
             }
         }
 
@@ -57,12 +60,12 @@ namespace DPReceiver
 
         public void OnReaderConnect(object Capture, string ReaderSerialNumber)
         {
-           
+            this.handler.InitCapture();
         }
 
         public void OnReaderDisconnect(object Capture, string ReaderSerialNumber)
         {
-           
+            this.handler.StopCapture();
         }
 
         public void OnSampleQuality(object Capture, string ReaderSerialNumber, CaptureFeedback CaptureFeedback)

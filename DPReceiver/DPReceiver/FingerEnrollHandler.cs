@@ -83,26 +83,28 @@ namespace DPReceiver
                     this.handler.enrollment.AddFeatures(featureSet);
                 }
                 catch (Exception e)
-                {
-                    MessageBox.Show("ERROR AL EXTRAER LAS CARACTERISTICAS DE LA HUELLA");
+                { 
+                    this.handler.SendMessage("Error when extracting fingerprint characteristics", ResponseType.Error);
                 }
                 finally
                 {
                     StringBuilder stringBuilder = new StringBuilder();
-                    stringBuilder.AppendFormat("Necesitas pasar el dedo {0} veces", this.handler.enrollment.FeaturesNeeded);
-                    //SetLabelCount(stringBuilder.ToString());
+                    stringBuilder.AppendFormat("Tap Finger {0} left", this.handler.enrollment.FeaturesNeeded);
+                    this.handler.SendMessage(stringBuilder.ToString());
 
                     switch (this.handler.enrollment.TemplateStatus)
                     {
                         case DPFP.Processing.Enrollment.Status.Ready:
                             this.handler.template = this.handler.enrollment.Template;
-                            //EnableButtonSave();
+                            this.handler.SendFingerData();
                             this.handler.StopCapture();
                             break;
                         case DPFP.Processing.Enrollment.Status.Failed:
                             this.handler.enrollment.Clear();
                             this.handler.StopCapture();
                             this.handler.InitCapture();
+
+                            this.handler.SendMessage("Finger enrollment failed", ResponseType.Error);
                             break;
                     }
                 }

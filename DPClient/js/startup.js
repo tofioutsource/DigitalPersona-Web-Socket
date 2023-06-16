@@ -75,17 +75,19 @@ Licensed under the MIT license: <http://www.opensource.org/licenses/mit-license.
     }else if (data.Type == 1) {
       var message = data.Data.Name + ' disconnected!';
       LogMessage(message);
-    }else if (data.Type == 2 && data.Data.Name != me.Name) {
+    }else if (data.Type == 2) {
       // We don't display it if it's from ourselves, because we display our own messages immediately
       // see the jQuery bindings later on for more info)
-      var message = data.Data.Name + ': ' + data.Data.Message;
-      LogMessage(message);
+      //var message = data.Data.Name + ': ' + data.Data.Message;
+      LogMessage(data.Data.Message);
     }else if (data.Type == 3) {
-      var message = data.Data.Message;
+      var message = data.Data;
       LogMessage(message);
     }else if (data.Type == 4) {
       // Set the online users, and show the list of users if you hover over the number.
       $('#onlineUsers').text(data.Data.Users.length).attr('title', data.Data.Users.join('\n'));
+    } else if(data.Type === 255) {
+      LogMessage('Error:' + data.Data.Message);
     }
   }
 
@@ -132,19 +134,21 @@ Licensed under the MIT license: <http://www.opensource.org/licenses/mit-license.
 
     $('#registerName').bind('submit', function(e) {
       e.preventDefault();
-      var name = $('#name').val();
+      // var name = $('#name').val();
 
-      if (!ValidateName(name)) {
-        alert('Please pick a name of length 3 - 25.');
-        return;
-      }
+      // if (!ValidateName(name)) {
+      //   alert('Please pick a name of length 3 - 25.');
+      //   return;
+      // }
 
-      me.Name = name;
-      var data = { Type: 0, Name: name };
+      // me.Name = name;
+      // var data = { Type: 0, Name: name };
 
-      AlchemyChatServer.Send(data);
-
-      // $('#registerName').hide('fast', function() { $('#sendMessage').show('fast'); });
+      AlchemyChatServer.Send({Type: 2});
+  
+      $('#registerName, #tapUser').hide('fast', function() {
+         $('#registerTap').show('fast'); 
+        });
     });
 
     $('#connectToServer').bind('submit', function(e) {

@@ -59,34 +59,39 @@
     <Reference Include="Alchemy, Version=2.2.0.238, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Alchemy.2.2.1\lib\net40\Alchemy.dll</HintPath>
     </Reference>
-    <Reference Include="DPFPCtlXTypeLibNET">
-      <HintPath>..\..\LIB - SDK Digital Persona\Bin\DPFPCtlXTypeLibNET.dll</HintPath>
+    <Reference Include="DPFPCtlXTypeLibNET, Version=1.6.1.0, Culture=neutral, PublicKeyToken=c0c98f712d5392a7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>LIBS\DPFPCtlXTypeLibNET.dll</HintPath>
     </Reference>
-    <Reference Include="DPFPCtlXWrapperNET">
-      <HintPath>..\..\LIB - SDK Digital Persona\Bin\DPFPCtlXWrapperNET.dll</HintPath>
+    <Reference Include="DPFPCtlXWrapperNET, Version=1.6.1.0, Culture=neutral, PublicKeyToken=c0c98f712d5392a7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>LIBS\DPFPCtlXWrapperNET.dll</HintPath>
     </Reference>
-    <Reference Include="DPFPDevNET">
-      <HintPath>..\..\LIB - SDK Digital Persona\Bin\DPFPDevNET.dll</HintPath>
+    <Reference Include="DPFPDevNET, Version=1.6.1.0, Culture=neutral, PublicKeyToken=696774c42ee28c57, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>LIBS\DPFPDevNET.dll</HintPath>
     </Reference>
-    <Reference Include="DPFPEngNET">
-      <HintPath>..\..\LIB - SDK Digital Persona\Bin\DPFPEngNET.dll</HintPath>
+    <Reference Include="DPFPEngNET, Version=1.6.1.0, Culture=neutral, PublicKeyToken=7fe76e7adf19964b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>LIBS\DPFPEngNET.dll</HintPath>
     </Reference>
-    <Reference Include="DPFPGuiNET">
-      <HintPath>..\..\LIB - SDK Digital Persona\Bin\DPFPGuiNET.dll</HintPath>
+    <Reference Include="DPFPGuiNET, Version=1.6.1.0, Culture=neutral, PublicKeyToken=d4f4a0bd9c559145, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>LIBS\DPFPGuiNET.dll</HintPath>
     </Reference>
-    <Reference Include="DPFPShrNET">
-      <HintPath>..\..\LIB - SDK Digital Persona\Bin\DPFPShrNET.dll</HintPath>
+    <Reference Include="DPFPShrNET, Version=1.6.1.0, Culture=neutral, PublicKeyToken=d902fe275a8d6cf2, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>LIBS\DPFPShrNET.dll</HintPath>
     </Reference>
-    <Reference Include="DPFPShrXTypeLibNET">
-      <HintPath>..\..\LIB - SDK Digital Persona\Bin\DPFPShrXTypeLibNET.dll</HintPath>
+    <Reference Include="DPFPShrXTypeLibNET, Version=1.6.1.0, Culture=neutral, PublicKeyToken=c0c98f712d5392a7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>LIBS\DPFPShrXTypeLibNET.dll</HintPath>
     </Reference>
-    <Reference Include="DPFPVerNET">
-      <HintPath>..\..\LIB - SDK Digital Persona\Bin\DPFPVerNET.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Hosting, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.Hosting.4.2.2\lib\net45\Microsoft.Owin.Hosting.dll</HintPath>
+    <Reference Include="DPFPVerNET, Version=1.6.1.0, Culture=neutral, PublicKeyToken=4de0a9c4dcc83984, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>LIBS\DPFPVerNET.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -111,6 +116,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppProcessor.cs" />
+    <Compile Include="AppResponse.cs" />
+    <Compile Include="FingerBase.cs" />
     <Compile Include="FingerCapture.cs" />
     <Compile Include="FingerCapturehandler.cs" />
     <Compile Include="FingerEnroll.cs" />
@@ -133,22 +140,22 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="dphftrex.dll">
+    <Content Include="dphftrex.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="dpHMatch.dll">
+    </Content>
+    <Content Include="dpHMatch.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="LIBS\DPFPCtlXTypeLibNET.dll" />
-    <None Include="LIBS\DPFPCtlXWrapperNET.dll" />
-    <None Include="LIBS\DPFPDevNET.dll" />
-    <None Include="LIBS\DPFPEngNET.dll" />
-    <None Include="LIBS\DPFPGuiNET.dll" />
-    <None Include="LIBS\DPFPShrNET.dll" />
-    <None Include="LIBS\DPFPShrXTypeLibNET.dll" />
-    <None Include="LIBS\DPFPVerNET.dll" />
+    <Content Include="LIBS\DPFPCtlXTypeLibNET.dll" />
+    <Content Include="LIBS\DPFPCtlXWrapperNET.dll" />
+    <Content Include="LIBS\DPFPDevNET.dll" />
+    <Content Include="LIBS\DPFPEngNET.dll" />
+    <Content Include="LIBS\DPFPGuiNET.dll" />
+    <Content Include="LIBS\DPFPShrNET.dll" />
+    <Content Include="LIBS\DPFPShrXTypeLibNET.dll" />
+    <Content Include="LIBS\DPFPVerNET.dll" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MainForm.resx">

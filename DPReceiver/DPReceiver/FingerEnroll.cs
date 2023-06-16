@@ -1,20 +1,18 @@
-﻿using NLog;
+﻿using Alchemy.Classes;
+using Newtonsoft.Json;
+using NLog;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace DPReceiver
 {
-    public class FingerEnroll : IFinger
+    public class FingerEnroll : FingerBase, IFinger
     {
-        private static Logger logger = LogManager.GetCurrentClassLogger();
+       
         public DPFP.Processing.Enrollment enrollment;
-        private DPFP.Capture.Capture capture;
-        public DPFP.Template template;
-
+        
+         
+        public FingerEnroll(UserContext context): base(context) { }
+          
         public void Dispose()
         {
             throw new NotImplementedException();
@@ -47,35 +45,6 @@ namespace DPReceiver
                 logger.Error(e);
             }
         }
-
-        public void InitCapture()
-        {
-            if (capture != null)
-            {
-                try
-                {
-                    capture.StartCapture();
-                }
-                catch (Exception e)
-                {
-                    logger.Error(e, "Could not start capture device");
-                }
-            }
-        }
-
-        public void StopCapture()
-        {
-            if (capture != null)
-            {
-                try
-                {
-                    capture.StopCapture();
-                }
-                catch (Exception e)
-                {
-                    logger.Error(e, "Could not stop capture device");
-                }
-            }
-        }
+         
     }
 }

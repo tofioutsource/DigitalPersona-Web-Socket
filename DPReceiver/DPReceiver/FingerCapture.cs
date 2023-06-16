@@ -1,25 +1,16 @@
-﻿using DPFP.Capture;
-using DPFP;
-using NLog;
+﻿using NLog;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using Alchemy.Classes;
 
 namespace DPReceiver
 {
-    public class FingerCapture : IFinger
-    {
-        private static Logger logger = LogManager.GetCurrentClassLogger();
+    public class FingerCapture : FingerBase, IFinger
+    { 
         private DPFP.Verification.Verification verification;
-        private DPFP.Capture.Capture capture;
-        private DPFP.Template template;
-         
+          
+        public FingerCapture(UserContext context): base(context)
+        { }
+
 
         public void Init()
         {
@@ -40,43 +31,10 @@ namespace DPReceiver
             }
             catch (Exception e)
             {
-                logger.Error(e);
+                SendMessage(e.Message); //logger.Error(e);
             }
         }
-
-        public void InitCapture()
-        {
-            if (capture != null)
-            {
-                try
-                {
-
-                    capture.StartCapture();
-                    logger.Info("Capturing");
-                }
-                catch (Exception e)
-                {
-                    logger.Error(e, "Could not start capture device");
-                }
-            }
-        }
-
-        public void StopCapture()
-        {
-            if (capture != null)
-            {
-                try
-                {
-                    capture.StopCapture();
-                    logger.Info("Capturing Stopped");
-                }
-                catch (Exception e)
-                {
-                    logger.Error(e, "Could not stop capture device");
-                }
-            }
-        }
-
+         
     
         public void Load()
         {
@@ -87,6 +45,7 @@ namespace DPReceiver
         public void Dispose()
         {
             StopCapture();
+            capture?.Dispose();
         }
     }
 }
