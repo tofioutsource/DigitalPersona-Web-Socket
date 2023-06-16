@@ -4,48 +4,47 @@ using Alchemy.Classes;
 
 namespace DPReceiver
 {
-    public class FingerCapture : FingerBase, IFinger
-    { 
+    public class FingerCapture : IFinger
+    {
         private DPFP.Verification.Verification verification;
-          
-        public FingerCapture(UserContext context): base(context)
-        { }
+        private readonly MainForm mainForm;
 
+        public FingerCapture(MainForm mainForm)
+        {
+            this.mainForm = mainForm;
+            this.mainForm.capturehandler.FingerComplete += Capturehandler_FingerComplete;    
+        }
+
+        private void Capturehandler_FingerComplete(DPFP.Sample sample)
+        {
+            this.mainForm.SendFingerData();
+        }
 
         public void Init()
         {
             try
             {
-                capture = new DPFP.Capture.Capture();
 
-                if (capture != null)
-                {
-                    capture.EventHandler = new FingerCapturehandler(this);
-                    template = new DPFP.Template();
-                    verification = new DPFP.Verification.Verification();
-                }
-                else
-                {
-                    throw new Exception("Could not start capturing interface");
-                }
+                verification = new DPFP.Verification.Verification();
+
             }
             catch (Exception e)
             {
-                SendMessage(e.Message); //logger.Error(e);
+                this.mainForm.SendMessage(e.Message); //logger.Error(e);
             }
         }
-         
-    
+
+
         public void Load()
         {
             Init();
-            InitCapture();
+            this.mainForm.InitCapture();
         }
 
         public void Dispose()
         {
-            StopCapture();
-            capture?.Dispose();
+            verification = null;
+            this.mainForm.StopCapture();
         }
     }
 }

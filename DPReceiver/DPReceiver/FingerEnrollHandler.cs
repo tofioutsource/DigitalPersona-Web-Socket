@@ -11,6 +11,7 @@ using System.Windows.Forms;
 
 namespace DPReceiver
 {
+    [Obsolete]
     public class FingerEnrollHandler : DPFP.Capture.EventHandler
     {
         private FingerEnroll handler;
@@ -24,7 +25,7 @@ namespace DPReceiver
 
         public void OnComplete(object Capture, string ReaderSerialNumber, Sample Sample)
         {
-            SetFeaturesEnrollment(Sample);
+            //SetFeaturesEnrollment(Sample);
         }
 
         public void OnFingerGone(object Capture, string ReaderSerialNumber)
@@ -61,54 +62,7 @@ namespace DPReceiver
         //    imagePawprint.Image = bitMap;
         //}
 
-        public DPFP.FeatureSet CreateFeatureSet(DPFP.Sample sample, DPFP.Processing.DataPurpose purpose)
-        {
-            DPFP.Processing.FeatureExtraction featureExtraction = new DPFP.Processing.FeatureExtraction();
-            DPFP.Capture.CaptureFeedback captureFeedback = DPFP.Capture.CaptureFeedback.None;
-            DPFP.FeatureSet featureSet = new DPFP.FeatureSet();
-
-            featureExtraction.CreateFeatureSet(sample, purpose, ref captureFeedback, ref featureSet);
-
-            return (captureFeedback == DPFP.Capture.CaptureFeedback.Good) ? featureSet : null;
-        }
-
-
-        public void SetFeaturesEnrollment(DPFP.Sample sample)
-        {
-            DPFP.FeatureSet featureSet = CreateFeatureSet(sample, DPFP.Processing.DataPurpose.Enrollment);
-            if (featureSet != null)
-            {
-                try
-                {
-                    this.handler.enrollment.AddFeatures(featureSet);
-                }
-                catch (Exception e)
-                { 
-                    this.handler.SendMessage("Error when extracting fingerprint characteristics", ResponseType.Error);
-                }
-                finally
-                {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    stringBuilder.AppendFormat("Tap Finger {0} left", this.handler.enrollment.FeaturesNeeded);
-                    this.handler.SendMessage(stringBuilder.ToString());
-
-                    switch (this.handler.enrollment.TemplateStatus)
-                    {
-                        case DPFP.Processing.Enrollment.Status.Ready:
-                            this.handler.template = this.handler.enrollment.Template;
-                            this.handler.SendFingerData();
-                            this.handler.StopCapture();
-                            break;
-                        case DPFP.Processing.Enrollment.Status.Failed:
-                            this.handler.enrollment.Clear();
-                            this.handler.StopCapture();
-                            this.handler.InitCapture();
-
-                            this.handler.SendMessage("Finger enrollment failed", ResponseType.Error);
-                            break;
-                    }
-                }
-            }
-        }
+       
+      
     }
 }

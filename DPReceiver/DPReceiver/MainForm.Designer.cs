@@ -52,6 +52,7 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "digital Persona - Bridge";
+            this.Deactivate += new System.EventHandler(this.MainForm_Deactivate);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
 

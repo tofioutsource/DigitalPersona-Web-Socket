@@ -11,10 +11,13 @@ using Alchemy.Classes;
 namespace DPReceiver
 {
     public class FingerCapturehandler : DPFP.Capture.EventHandler
-    {
-        private FingerCapture handler;
+    { 
+        private MainForm handler;
 
-        public FingerCapturehandler(FingerCapture handler)
+        public delegate void FingerCompleteHandler(Sample sample);
+        public event FingerCompleteHandler FingerComplete;
+
+        public FingerCapturehandler(MainForm handler)
         {
 
             this.handler = handler;
@@ -44,7 +47,8 @@ namespace DPReceiver
                 //    }
                 //});
                 this.handler.SendMessage("Finger has been logged");
-                this.handler.SendFingerData();
+                FingerComplete?.Invoke(Sample);
+                //this.handler.SendFingerData();
             }
         }
 
