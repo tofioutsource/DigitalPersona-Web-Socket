@@ -1,28 +1,32 @@
 package org.dp;
 
-import com.corundumstudio.socketio.AckRequest;
 import com.corundumstudio.socketio.Configuration;
-import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
-import com.corundumstudio.socketio.listener.DataListener;
-import org.dp.listeners.SockListener;
-import org.dp.models.SockModel;
+import org.dp.listeners.CaptureController;
+import org.dp.listeners.ReaderController;
+import org.dp.models.CaptureModel;
+import org.dp.models.DPModel;
+import org.dp.models.ReaderModel;
 
-import java.io.Console;
 import java.util.Objects;
 import java.util.Scanner;
 
 public class DigitalPersona {
 
+    private static final DPModel dpModel = new DPModel();
+
     public static void main(String[] args) {
 
         final Configuration configuration = new Configuration();
         configuration.setHostname("localhost");
-        configuration.setPort(8081);
+        configuration.setPort(9092);
 
         final SocketIOServer server = new SocketIOServer(configuration);
-        server.addEventListener("dp", SockModel.class, new SockListener());
+        server.addEventListener("reader", ReaderModel.class, new ReaderController(server, dpModel));
+        server.addEventListener("capture", CaptureModel.class, new CaptureController(server, dpModel));
         server.start();
+
+        //UareUGlobal.DestroyReaderCollection();
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("Type quit to exit program");

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="dpjavapos">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/dpjavapos.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/dpuareu.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/jpos113.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/xercesImpl-2.6.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/xmlParserAPIs.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
